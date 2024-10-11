@@ -21,7 +21,7 @@ function App() {
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
     setToken(storedToken); // Set the token state based on local storage
-  }, [token]); // Only run this effect when token changes
+  }, []);
 
   return (
     <div>
