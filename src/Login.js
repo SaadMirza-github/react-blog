@@ -19,7 +19,7 @@ const Login = () => {
 
             
             // Redirect to the home page after successful login
-            navigate('/home'); // Use navigate to redirect
+            navigate('/'); // Use navigate to redirect
         } catch (error) {
             console.error('Login failed:', error.response.data);
             // Optionally, you can show an error message to the user
