@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-const BlogList = () => {
+const BlogList = ({ token }) => {
     const [blogs, setBlogs] = useState([]);
-    const [token, setToken] = useState("");
+    //const [token, setToken] = useState(null);
     useEffect(() => {
+        //setToken(localStorage.getItem('token'));
+        //console.log("BlogList.useeffect------Token:", token);
         fetchBlogs();
-        setToken(localStorage.getItem('token'));
-    }, []);
+        
+    }, [token]);
 
     const fetchBlogs = async () => {
         try {

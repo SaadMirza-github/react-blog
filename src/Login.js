@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Login = ({ setToken }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -17,6 +17,8 @@ const Login = () => {
             // Store the JWT token in local storage
             localStorage.setItem('token', response.data.token);
 
+            // Update the token in parent component
+            setToken(response.data.token);
             
             // Redirect to the home page after successful login
             navigate('/'); // Use navigate to redirect

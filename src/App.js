@@ -9,19 +9,21 @@ import EditBlog from './EditBlog';
 import BlogDetails from './BlogDetails';
 
 function App() {
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState(null);
   const navigate = useNavigate(); // Hook to programmatically navigate
 
   const handleLogout = () => {
     localStorage.removeItem('token'); // Remove token from localStorage
-    setToken(""); // Update state to reflect logout
+    setToken(null); // Update state to reflect logout
+    console.log("handleLogout----token :",token);
     navigate('/'); // Redirect to home page (or login page as per your logic)
   };
 
   useEffect(() => {
-    const storedToken = localStorage.getItem('token');
-    setToken(storedToken); // Set the token state based on local storage
-  }, []);
+    const token = localStorage.getItem('token');
+    setToken(token);
+    console.log("useffect----token :",token); // Set the token state based on local storage
+  }, [token]);
 
   return (
     <div>
@@ -39,18 +41,18 @@ function App() {
                   <Link className="nav-link" to="/">Home</Link>
                 </li>
                 {/* Show Login and Register links only if not logged in */}
-                {!token ? (
+                {token === null && (
                   <>
                     <li className="nav-item">
-                      <Link className="nav-link" to="/login">Login</Link>
+                      <Link className="nav-link" to="/login" >Login</Link>
                     </li>
                     <li className="nav-item">
                       <Link className="nav-link" to="/register">Register</Link>
                     </li>
                   </>
-                ) : null}
+                )}
                 {/* Show "Create Blog" link only if the token is present */}
-                {token && (
+                {token !== null && (
                   <li className="nav-item">
                     <Link className="nav-link" to="/create">Create Blog</Link>
                   </li>
@@ -66,10 +68,10 @@ function App() {
         </nav>
       </div>
       <Routes>
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login setToken={setToken}/>} />
         <Route path="/register" element={<Register />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/" element={<BlogList />} />
+        <Route path="/" element={<BlogList token={token}/>} />
         <Route path="/create" element={<CreateBlog />} />
         <Route path="/edit/:id" element={<EditBlog />} />
         <Route path="/:id" element={<BlogDetails />} />
