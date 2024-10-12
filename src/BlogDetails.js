@@ -26,7 +26,10 @@ const BlogDetails = () => {
     return (
         <div className="container mt-5">
             <h2>{blog.title}</h2>
-            <p>{blog.content}</p>
+            <div>
+                {/* Render HTML content safely */}
+                <div dangerouslySetInnerHTML={{ __html: blog.content }} />
+            </div>
         </div>
     );
 };

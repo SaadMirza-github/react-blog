@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import ReactQuill from 'react-quill';
 
 const CreateBlog = () => {
     const [title, setTitle] = useState('');
@@ -39,15 +40,23 @@ const CreateBlog = () => {
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Content</label>
-                    <textarea
-                        className="form-control"
-                        rows="5"
+                    <ReactQuill
+                        theme="snow"
                         value={content}
-                        onChange={(e) => setContent(e.target.value)}
-                        required
+                        onChange={setContent} // Store content in state
+                        modules={{
+                            toolbar: [
+                                [{ header: '1' }, { header: '2' }, { font: [] }],
+                                [{ list: 'ordered' }, { list: 'bullet' }],
+                                ['bold', 'italic', 'underline'],
+                                ['image', 'link'],
+                                ['clean'] // Remove formatting button
+                            ]
+                        }}
+                        style={{ height: '200px' }}
                     />
                 </div>
-                <button type="submit" className="btn btn-primary">Create</button>
+                <button type="submit" className="btn btn-primary my-5">Create</button>
             </form>
         </div>
     );

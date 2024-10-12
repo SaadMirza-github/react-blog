@@ -1,6 +1,7 @@
 // src/components/EditBlog.js
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import ReactQuill from 'react-quill';
 import axios from 'axios';
 
 const EditBlog = () => {
@@ -55,15 +56,23 @@ const EditBlog = () => {
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Content</label>
-                    <textarea
-                        className="form-control"
-                        rows="5"
+                    <ReactQuill
+                        theme="snow"
                         value={content}
-                        onChange={(e) => setContent(e.target.value)}
-                        required
+                        onChange={setContent} // Update state with Quill content
+                        modules={{
+                            toolbar: [
+                                [{ header: '1' }, { header: '2' }, { font: [] }],
+                                [{ list: 'ordered' }, { list: 'bullet' }],
+                                ['bold', 'italic', 'underline'],
+                                ['image', 'link'],
+                                ['clean'] // Remove formatting button
+                            ]
+                        }}
+                        style={{ height: '300px' }}
                     />
                 </div>
-                <button type="submit" className="btn btn-primary">Update</button>
+                <button type="submit" className="btn btn-primary my-5">Update</button>
             </form>
         </div>
     );
