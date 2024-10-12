@@ -26,6 +26,12 @@ const BlogDetails = () => {
     return (
         <div className="container mt-5">
             <h2>{blog.title}</h2>
+            {blog.image && (
+                <div className="mt-4">
+                    <h5>Image:</h5>
+                    <img src={`http://localhost:5000${blog.image}`} alt={blog.title} className="img-fluid" />
+                </div>
+            )}
             <div>
                 {/* Render HTML content safely */}
                 <div dangerouslySetInnerHTML={{ __html: blog.content }} />

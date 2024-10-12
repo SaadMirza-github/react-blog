@@ -8,6 +8,7 @@ const EditBlog = () => {
     const { id } = useParams();
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
+    const [image, setImage] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -20,6 +21,7 @@ const EditBlog = () => {
             const response = await axios.get(`${apiUrl}/api/blogs/${id}`);
             setTitle(response.data.title);
             setContent(response.data.content);
+            setImage(response.data.image);
         } catch (err) {
             console.error('Error fetching blog details:', err);
         }
@@ -27,13 +29,24 @@ const EditBlog = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        // Create FormData object to handle file and text data
+        const formData = new FormData();
+        formData.append('title', title);
+        formData.append('content', content);
+        if (image) {
+            formData.append('image', image); // Append image if exists
+        }
         try {
             const apiUrl = "http://localhost:5000";
             const token = localStorage.getItem('token');  // Get token from localStorage
             if (token) {
                 axios.defaults.headers.common['Authorization'] = token;  // Set the token in the header
             }
-            await axios.put(`${apiUrl}/api/blogs/${id}`, { title, content });
+            await axios.put(`${apiUrl}/api/blogs/${id}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data', // Necessary for file uploads
+                },
+            });
             navigate('/'); // Redirect to blog list
         } catch (err) {
             console.error('Error updating blog:', err);

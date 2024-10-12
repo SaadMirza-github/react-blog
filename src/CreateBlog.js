@@ -7,17 +7,34 @@ import ReactQuill from 'react-quill';
 const CreateBlog = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
+    const [image, setImage] = useState(null);
     const navigate = useNavigate();
+
+    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // Create FormData object to handle file and text data
+        const formData = new FormData();
+        formData.append('title', title);
+        formData.append('content', content);
+        if (image) {
+            formData.append('image', image); // Append image if exists
+        }
+
+
         try {
             const apiUrl = "http://localhost:5000";
             const token = localStorage.getItem('token');  // Get token from localStorage
             if (token) {
                 axios.defaults.headers.common['Authorization'] = token;  // Set the token in the header
             }
-            await axios.post(`${apiUrl}/api/blogs`, { title, content });
+            await axios.post(`${apiUrl}/api/blogs`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data', // Necessary for file uploads
+                },
+            });
             navigate('/'); // Redirect to blog list
         } catch (err) {
             console.error('Error creating blog:', err);
@@ -36,6 +53,15 @@ const CreateBlog = () => {
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
                         required
+                    />
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="image" className="form-label">Upload Image</label>
+                    <input
+                        type="file"
+                        className="form-control"
+                        id="image"
+                        onChange={(e) => setImage(e.target.files[0])}
                     />
                 </div>
                 <div className="mb-3">
