@@ -51,12 +51,13 @@ const BlogList = ({ token }) => {
                                 {/* Second Row: Image */}
                                 <div className="mb-3 text-center">
                                     <img 
-                                        src={`http://localhost:5000${blog.image == null ? "/uploads/placeholder.jpg" : blog.images}`} // Use the correct path to your image
+                                        src={`http://localhost:5000${blog.image == null ? "/uploads/placeholder.jpg" : blog.image}`} // Use the correct path to your image
                                         alt={blog.title} // Alt text for accessibility
                                         className="img-fluid" // img-fluid makes the image responsive
-                                        style={{ width: '100%' }} // Ensures the image takes full width
+                                        style={{ width: '100%' ,  height: '207px'}} // Ensures the image takes full width
                                     />
                                 </div>
+                                
     
                                 {/* Third Row: Buttons center aligned */}
                                 <div className="text-center">

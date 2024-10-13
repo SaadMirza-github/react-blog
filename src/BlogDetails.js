@@ -15,10 +15,18 @@ const BlogDetails = () => {
         try {
             const apiUrl = "http://localhost:5000";
             const response = await axios.get(`${apiUrl}/api/blogs/${id}`);
+            
+            
             setBlog(response.data);
         } catch (err) {
             console.error('Error fetching blog details:', err);
         }
+    };
+
+    // Function to format date in DD/MM/YYYY format
+    const formatDate = (dateString) => {
+        const updatedAt = new Date(dateString);
+        return `${updatedAt.getDate().toString().padStart(2, '0')}/${(updatedAt.getMonth() + 1).toString().padStart(2, '0')}/${updatedAt.getFullYear()}`;
     };
 
     if (!blog) return <div>Loading...</div>;
@@ -26,9 +34,12 @@ const BlogDetails = () => {
     return (
         <div className="container mt-5">
             <h2>{blog.title}</h2>
+            <h5 className="fw-bold fst-italic mb-5" style={{ fontSize: '14px' }}>
+                Author: {blog.author.username}  Date: {formatDate(blog.updatedAt)} {/* Call formatDate function */}
+            </h5>
             {blog.image && (
                 <div className="mt-4">
-                    <h5>Image:</h5>
+                    
                     <img src={`http://localhost:5000${blog.image}`} alt={blog.title} className="img-fluid" />
                 </div>
             )}

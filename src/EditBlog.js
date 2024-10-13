@@ -68,6 +68,15 @@ const EditBlog = () => {
                     />
                 </div>
                 <div className="mb-3">
+                    <label htmlFor="image" className="form-label">Upload Image</label>
+                    <input
+                        type="file"
+                        className="form-control"
+                        id="image"
+                        onChange={(e) => setImage(e.target.files[0])}
+                    />
+                </div>
+                <div className="mb-3">
                     <label className="form-label">Content</label>
                     <ReactQuill
                         theme="snow"
