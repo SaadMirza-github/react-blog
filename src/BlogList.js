@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState , useRef} from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -9,6 +9,7 @@ const BlogList = ({ token }) => {
     const [page, setPage] = useState(1);         // Current page number
     const [loading, setLoading] = useState(false); // Loading state
     const [hasMore, setHasMore] = useState(true);  // Flag to check if there are more blogs to load
+    const prevPageRef = useRef(); // useRef to track the previous page value
 
     // Handler to load the next page of blogs
     const loadMoreBlogs = () => {
@@ -18,20 +19,20 @@ const BlogList = ({ token }) => {
     useEffect(() => {
 
         fetchBlogs();
-        
+        prevPageRef.current = page; // Store the current page in the ref after fetching
     }, [token, page]);
 
 
     const fetchBlogs = async () => {
-        
+        const prevPage = prevPageRef.current;
         setLoading(true);
         try {
             const apiUrl = "http://localhost:5000";
             const response = await axios.get(`${apiUrl}/api/blogs?page=${page}&limit=1`);
             // Append new blogs to existing ones
            
-                if(page === 1) {
-                    setBlogs(response.data.blogs);
+                if(page === prevPage) {
+                    setBlogs((prevBlogs) => [...prevBlogs]);
                 }
                 else {
                     setBlogs((prevBlogs) => [...prevBlogs, ...response.data.blogs]);
