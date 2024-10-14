@@ -99,7 +99,7 @@ function App() {
       <footer className="py-5 bg-light">
         <div className="container">
           <p className="m-0 text-center text-secondary">
-            &copy; {new Date().getFullYear()} My App. All rights reserved.
+            &copy; {new Date().getFullYear()} My Blog. All rights reserved.
           </p>
         </div>
       </footer>
