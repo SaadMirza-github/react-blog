@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { API_URL } from './env';
 
 const Login = ({ setToken }) => {
     const [email, setEmail] = useState('');
@@ -11,7 +12,8 @@ const Login = ({ setToken }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:5000/api/users/login', { email, password });
+            
+            const response = await axios.post(`${API_URL}/api/users/login`, { email, password });
             console.log('Login successful:', response.data);
 
             // Store the JWT token in local storage

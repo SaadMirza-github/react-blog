@@ -1,7 +1,7 @@
 import React, { useEffect, useState , useRef} from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-
+import { API_URL } from './env';
 
 
 const BlogList = ({ token }) => {
@@ -27,8 +27,8 @@ const BlogList = ({ token }) => {
         const prevPage = prevPageRef.current;
         setLoading(true);
         try {
-            const apiUrl = "http://localhost:5000";
-            const response = await axios.get(`${apiUrl}/api/blogs?page=${page}&limit=1`);
+            
+            const response = await axios.get(`${API_URL}/api/blogs?page=${page}&limit=1`);
             // Append new blogs to existing ones
            
                 if(page === prevPage) {

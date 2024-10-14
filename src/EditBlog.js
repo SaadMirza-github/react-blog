@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import ReactQuill from 'react-quill';
 import axios from 'axios';
+import { API_URL } from './env';
 
 const EditBlog = () => {
     const { id } = useParams();
@@ -17,8 +18,8 @@ const EditBlog = () => {
 
     const fetchBlogDetails = async () => {
         try {
-            const apiUrl = "http://localhost:5000";
-            const response = await axios.get(`${apiUrl}/api/blogs/${id}`);
+            
+            const response = await axios.get(`${API_URL}/api/blogs/${id}`);
             setTitle(response.data.title);
             setContent(response.data.content);
             setImage(response.data.image);

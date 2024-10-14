@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import ReactQuill from 'react-quill';
+import { API_URL } from './env';
 
 const CreateBlog = () => {
     const [title, setTitle] = useState('');
@@ -25,12 +26,12 @@ const CreateBlog = () => {
 
 
         try {
-            const apiUrl = "http://localhost:5000";
+            
             const token = localStorage.getItem('token');  // Get token from localStorage
             if (token) {
                 axios.defaults.headers.common['Authorization'] = token;  // Set the token in the header
             }
-            await axios.post(`${apiUrl}/api/blogs`, formData, {
+            await axios.post(`${API_URL}/api/blogs`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data', // Necessary for file uploads
                 },

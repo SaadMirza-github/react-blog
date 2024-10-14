@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { API_URL } from './env';
 
 const BlogDetails = () => {
     const { id } = useParams();
@@ -13,8 +14,8 @@ const BlogDetails = () => {
 
     const fetchBlogDetails = async () => {
         try {
-            const apiUrl = "http://localhost:5000";
-            const response = await axios.get(`${apiUrl}/api/blogs/${id}`);
+            
+            const response = await axios.get(`${API_URL}/api/blogs/${id}`);
             
             
             setBlog(response.data);
@@ -40,7 +41,7 @@ const BlogDetails = () => {
             {blog.image && (
                 <div className="mt-4">
                     
-                    <img src={`http://localhost:5000${blog.image}`} alt={blog.title} className="img-fluid" />
+                    <img src={`${API_URL}${blog.image}`} alt={blog.title} className="img-fluid" />
                 </div>
             )}
             <div>
